@@ -1,8 +1,8 @@
-# curriculum-databases-projects-template
+![](https://img.shields.io/badge/Microverse-blueviolet)
 
-> This template should be used for database related projects at Microverse.
-> Generate your own repository, update this README and edit all files content while working on projects. You should not be adding any new files unless asked otherwise.
+# Vet Clinic
 
+This project is to practice relational database concepts creating a data structure for a vet clinic.
 
 ## Getting Started
 
@@ -10,28 +10,38 @@ This repository includes files with plain SQL that can be used to recreate a dat
 
 - Use [schema.sql](./schema.sql) to create all tables.
 - Use [data.sql](./data.sql) to populate tables with sample data.
-- Check [queries.sql](./queries.sql) for examples of queries that can be run on a newly created database. **Important note: this file might include queries that make changes in the database (e.g., remove records). Use them responsibly!**
+- Check [queries.sql](./queries.sql) for examples of queries that can be run on a newly created database.
 
+**Important note: this file might include queries that make changes in the database (e.g., remove records). Use them responsibly!**
+
+---
+
+To run a local copy of this project follow these simple steps:
+
+### Prerequisites
+
+- Any web browser (e.g. Google Chrome)
+- Any Code Editor (e.g. Vscode)
+
+### Cloning the repository
+
+- Create a new folder.
+- Open your console in the new folder and run this command: `git clone https://github.com/anagudelogu/vet-clinic.git`.
+- Start recreating the database!
 
 ## Authors
 
-👤 **Author1**
+👤 **Andres Agudelo**
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
-
-👤 **Author2**
-
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
+- GitHub: [@anagudelogu](https://github.com/anagudelogu)
+- Twitter: [@AgudeloAndres\_\_](https://twitter.com/AgudeloAndres__)
+- LinkedIn: [Andres Agudelo Guzman](https://linkedin.com/in/aagst)
 
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
 
-Feel free to check the [issues page](../../issues/).
+Feel free to check the [issues page](https://github.com/anagudelogu/vet-clinic/issues).
 
 ## Show your support
 
