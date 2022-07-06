@@ -35,51 +35,6 @@ SELECT *
 FROM animals
 WHERE weight_kg BETWEEN 10.4 and 17.3;
 -- DAY 2
--- Update the animals table by setting the species column to unspecified.
--- Verify that change was made. Then roll back the change
--- Verify that the species columns went back to the state before the transaction.
-BEGIN;
-UPDATE animals
-SET species = 'unspecified';
-TABLE animals;
-ROLLBACK;
-TABLE animals;
--- Update the animals table by setting the species column to digimon for all animals that have a name ending in mon.
--- Update the animals table by setting the species column to pokemon for all animals that don't have species already set.
--- Commit the transaction.
-BEGIN;
-UPDATE animals
-SET species = 'digimon'
-WHERE name LIKE '%mon';
-UPDATE animals
-SET species = 'pokemon'
-WHERE species IS NULL;
-TABLE animals;
-COMMIT;
--- Delete all records in the animals table, then roll back the transaction.
-BEGIN;
-DELETE FROM animals;
-TABLE animals;
-ROLLBACK;
-TABLE animals;
--- Delete all animals born after Jan 1st, 2022.
--- Create a savepoint for the transaction.
--- Update all animals' weight to be their weight multiplied by -1.
--- Rollback to the savepoint
--- Update all animals' weights that are negative to be their weight multiplied by -1.
--- Commit transaction
-BEGIN;
-DELETE FROM animals
-WHERE date_of_birth > '2022-01-01';
-SAVEPOINT sp1;
-UPDATE animals
-SET weight_kg = weight_kg * -1;
-ROLLBACK TO sp1;
-UPDATE animals
-SET weight_kg = weight_kg * -1
-WHERE weight_kg < 0;
-TABLE animals;
-COMMIT;
 -- How many animals are there?
 SELECT COUNT(*)
 FROM animals;
@@ -106,3 +61,83 @@ SELECT species,
 FROM animals
 WHERE date_of_birth BETWEEN '1990-01-01' AND '2000-12-31'
 GROUP BY species;
+-- DAY 3
+-- Write queries (using JOIN) to answer the following questions:
+-- What animals belong to Melody Pond?
+SELECT name as animal_name
+FROM owners
+  INNER JOIN animals ON owners.id = animals.owner_id
+WHERE owners.id = (
+    SELECT id
+    FROM owners
+    WHERE full_name = 'Melody POnd'
+  );
+-- List of all animals that are pokemon (their type is Pokemon).
+SELECT animals.name
+FROM animals
+  INNER JOIN species ON animals.species_id = species.id
+WHERE species.id = (
+    SELECT id
+    FROM species
+    WHERE name = 'Pokemon'
+  );
+-- List all owners and their animals, remember to include those that don't own any animal.
+SELECT full_name as Owner,
+  name as Animal
+FROM owners
+  LEFT JOIN animals ON owners.id = animals.owner_id;
+-- How many animals are there per species?
+SELECT species.name,
+  COUNT(*) as quantity
+FROM animals
+  INNER JOIN species ON animals.species_id = species.id
+GROUP BY species.name;
+-- List all Digimon owned by Jennifer Orwell.
+SELECT animals.name as Digimon_Owned
+FROM animals
+  INNER JOIN species ON animals.species_id = species.id
+WHERE species.id = (
+    SELECT id
+    FROM species
+    WHERE name = 'Digimon'
+  )
+  AND animals.owner_id = (
+    SELECT id
+    FROM owners
+    WHERE full_name = 'Jennifer Orwell'
+  );
+-- List all animals owned by Dean Winchester that haven't tried to escape.
+SELECT animals.name as animal
+FROM animals
+  INNER JOIN owners ON animals.owner_id = owners.id
+WHERE owners.id = (
+    SELECT id
+    FROM owners
+    WHERE full_name = 'Dean Winchester'
+  )
+  AND animals.escape_attempts = 0;
+-- Who owns the most animals?
+-- Main method:
+SELECT full_name as name,
+  COUNT(full_name)
+FROM animals
+  INNER JOIN owners ON animals.owner_id = owners.id
+GROUP BY full_name
+HAVING COUNT(full_name) = (
+    SELECT MAX(c)
+    FROM (
+        SELECT full_name,
+          COUNT(full_name) as c
+        FROM animals
+          INNER JOIN owners ON animals.owner_id = owners.id
+        GROUP BY full_name
+      ) x
+  );
+-- Alternative method:
+SELECT full_name as name,
+  COUNT(full_name) count
+FROM animals
+  INNER JOIN owners ON animals.owner_id = owners.id
+GROUP BY full_name
+ORDER BY count DESC
+LIMIT 1;
