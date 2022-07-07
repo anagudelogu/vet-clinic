@@ -8,5 +8,37 @@ CREATE TABLE animals(
     weight_kg FLOAT,
     PRIMARY KEY (id)
 );
+-- DAY 2
 ALTER TABLE animals
 ADD species VARCHAR(50);
+-- DAY 3
+-- Create a table named owners with the following columns:
+-- id: integer (set it as autoincremented PRIMARY KEY)
+-- full_name: string
+-- age: integer
+CREATE TABLE owners(
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    full_name VARCHAR(255),
+    age INT
+);
+-- Create a table named species with the following columns:
+-- id: integer (set it as autoincremented PRIMARY KEY)
+-- name: string
+CREATE TABLE species(
+    id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY,
+    name VARCHAR(255)
+);
+-- Modify animals table:
+-- Make sure that id is set as autoincremented PRIMARY KEY
+-- Remove column species
+ALTER TABLE ANIMALS DROP COLUMN SPECIES;
+-- Add column species_id which is a foreign key referencing species table
+ALTER TABLE ANIMALS
+ADD species_id INT;
+ALTER TABLE ANIMALS
+ADD CONSTRAINT species_id FOREIGN KEY (species_id) REFERENCES species (id);
+-- Add column owner_id which is a foreign key referencing the owners table
+ALTER TABLE ANIMALS
+ADD owner_id INT;
+ALTER TABLE ANIMALS
+ADD CONSTRAINT owner_id FOREIGN KEY (owner_id) REFERENCES owners (id);
