@@ -2,6 +2,8 @@
 
 # Vet Clinic
 
+![](./vet_clinic_schema.png)
+
 This project is to practice relational database concepts creating a data structure for a vet clinic.
 
 ## Getting Started
